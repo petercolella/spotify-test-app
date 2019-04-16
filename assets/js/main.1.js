@@ -7,14 +7,14 @@
  * https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow
  */
 
-// var request = require('request'); // "Request" library
+var request = require('request'); // "Request" library
 
 // Use a config file to hide your client id and client secret.
 // Put the config.js file in your .gitignore.
 // import config from '../../utils/config';
-const client_id = config.CLIENT_ID;
-const client_secret = config.CLIENT_SECRET;
-const base64 = btoa(`${client_id}:${client_secret}`);
+const client_id = '3f278a100b334d8a9600e40a6408aca2';
+const client_secret = 'e3606519ca4f4ed0af293e7840980646';
+const base64 = new Buffer(client_id + ':' + client_secret).toString('base64');
 
 /* 
 var client_id = 'CLIENT_ID'; // Your client id
@@ -37,22 +37,19 @@ console.log(client_id);
 console.log(client_secret);
 console.log(base64);
 console.log(authOptions);
-
-$('#spotify-api').on('click', function() {
-  $.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      // use the access token to access the Spotify Web API
-      var token = body.access_token;
-      var options = {
-        url: 'https://api.spotify.com/v1/users/jmperezperez',
-        headers: {
-          Authorization: 'Bearer ' + token
-        },
-        json: true
-      };
-      $.get(options, function(error, response, body) {
-        console.log(body);
-      });
-    }
-  });
+request.post(authOptions, function(error, response, body) {
+  if (!error && response.statusCode === 200) {
+    // use the access token to access the Spotify Web API
+    var token = body.access_token;
+    var options = {
+      url: 'https://api.spotify.com/v1/users/jmperezperez',
+      headers: {
+        Authorization: 'Bearer ' + token
+      },
+      json: true
+    };
+    request.get(options, function(error, response, body) {
+      console.log(body);
+    });
+  }
 });
