@@ -12,8 +12,8 @@
 // Use a config file to hide your client id and client secret.
 // Put the config.js file in your .gitignore.
 // import config from '../../utils/config';
-const client_id = config.CLIENT_ID;
-const client_secret = config.CLIENT_SECRET;
+const client_id = process.env.CLIENT_ID || config.CLIENT_ID;
+const client_secret = process.env.CLIENT_SECRET || config.CLIENT_SECRET;
 const base64 = btoa(`${client_id}:${client_secret}`);
 
 /* 
